@@ -1,0 +1,169 @@
+﻿@model IEnumerable<GLMS_POE.Models.Contract>
+
+@{
+    ViewData["Title"] = "Contracts";
+}
+
+<h2 class="fw-light mb-4">Contracts</h2>
+
+<form method="get" asp-action="Index" class="mb-3">
+    <div class="row g-2">
+
+        <div class="col-md-3">
+            <input type="date"
+                   name="startDate"
+                   class="form-control" />
+        </div>
+
+        <div class="col-md-3">
+            <input type="date"
+                   name="endDate"
+                   class="form-control" />
+        </div>
+
+        <div class="col-md-3">
+            <select name="status" class="form-control">
+                <option value="">All Statuses</option>
+                <option>Active</option>
+                <option>Expired</option>
+                <option>On Hold</option>
+            </select>
+        </div>
+
+        <div class="col-md-3 d-flex gap-2">
+            <button type="submit" class="btn btn-dark">
+                Filter
+            </button>
+
+            <a asp-action="Index" class="btn btn-light border">
+                Clear
+            </a>
+        </div>
+
+    </div>
+</form>
+
+<p class="mb-4">
+    <a asp-action="Create" class="btn btn-primary rounded-pill px-4">
+        Add Contract
+    </a>
+</p>
+
+@if (Model == null || !Model.Any())
+{
+    <div class="alert alert-light border">
+        No contracts found for the selected filter.
+    </div>
+}
+else
+{
+    <table class="table align-middle">
+        <thead>
+            <tr>
+                <th>Client</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Status</th>
+                <th>Service Level</th>
+                <th>File</th>
+                <th class="text-end">Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td class="fw-medium">
+                        @(item.ClientName ?? item.Client?.Name ?? "No Client")
+                    </td>
+
+                    <td>
+                        @item.StartDate.ToShortDateString()
+                    </td>
+
+                    <td>
+                        @item.EndDate.ToShortDateString()
+                    </td>
+
+                    <td>
+                        @if (item.Status == "Active")
+                        {
+                            <span class="badge bg-success-subtle text-success border">
+                                Active
+                            </span>
+                        }
+                        else if (item.Status == "Expired")
+                        {
+                            <span class="badge bg-danger-subtle text-danger border">
+                                Expired
+                            </span>
+                        }
+                        else if (item.Status == "On Hold")
+                        {
+                            <span class="badge bg-secondary-subtle text-secondary border">
+                                On Hold
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-light text-dark border">
+                                @item.Status
+                            </span>
+                        }
+                    </td>
+
+                    <td>
+                        @item.ServiceLevel
+                    </td>
+
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.FilePath))
+                        {
+                            <a asp-action="Download"
+                                   asp-route-filePath="@item.FilePath"
+                                   class="btn btn-sm btn-outline-secondary rounded-pill">
+                                Download
+                            </a>
+                        }
+                        else
+                        {
+                            <span class="text-muted">
+                                No file
+                            </span>
+                        }
+                    </td>
+
+                    <td class="text-end text-nowrap">
+
+                        <a asp-action="Details"
+                               asp-route-id="@item.Id"
+                               class="btn btn-sm btn-light border rounded-pill">
+                            Details
+                        </a>
+
+                        <a asp-action="Edit"
+                               asp-route-id="@item.Id"
+                               class="btn btn-sm btn-light border rounded-pill">
+                            Edit
+                        </a>
+
+                        <a asp-action="Delete"
+                               asp-route-id="@item.Id"
+                               class="btn btn-sm btn-light border rounded-pill">
+                            Delete
+                        </a>
+
+                    </td>
+
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+}
+
+<!-- ///////////////////////////////////////// END OF FILE ///////////////////////////////////////// -->

@@ -1,0 +1,94 @@
+﻿@model GLMS_POE.Models.Contract
+
+@{
+    ViewData["Title"] = "Edit Contract";
+}
+
+<h1>Edit Contract</h1>
+
+<h4>Contract</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-5">
+        <form asp-action="Edit" method="post">
+
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="FilePath" />
+
+            <div class="form-group mb-2">
+                <label asp-for="ClientId" class="control-label"></label>
+                <select asp-for="ClientId" class="form-control" asp-items="ViewBag.ClientId">
+                    <option value="">-- Select Client --</option>
+                </select>
+                <span asp-validation-for="ClientId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-2">
+                <label asp-for="StartDate" class="control-label"></label>
+                <input asp-for="StartDate" type="date" class="form-control" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-2">
+                <label asp-for="EndDate" class="control-label"></label>
+                <input asp-for="EndDate" type="date" class="form-control" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-2">
+                <label asp-for="Status" class="control-label"></label>
+                <select asp-for="Status" class="form-control">
+                    <option value="">-- Select Status --</option>
+                    <option>Active</option>
+                    <option>Expired</option>
+                    <option>On Hold</option>
+                </select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-2">
+                <label asp-for="ServiceLevel" class="control-label"></label>
+                <select asp-for="ServiceLevel" class="form-control">
+                    <option value="">-- Select Level --</option>
+                    <option>Basic</option>
+                    <option>Standard</option>
+                    <option>Premium</option>
+                </select>
+                <span asp-validation-for="ServiceLevel" class="text-danger"></span>
+            </div>
+
+            @if (!string.IsNullOrEmpty(Model.FilePath))
+            {
+                <div class="form-group mb-2">
+                    <label>Existing File</label>
+                    <div>
+                        <a asp-action="Download" asp-route-filePath="@Model.FilePath">
+                            Download PDF
+                        </a>
+                    </div>
+                </div>
+            }
+
+            <div class="form-group mt-4">
+                <input type="submit"
+                       value="Save Changes"
+                       class="btn btn-primary rounded-pill px-4" />
+
+                <a asp-action="Index"
+                       class="btn btn-light border rounded-pill px-4">
+                    Back to List
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+<!-- ///////////////////////////////////////// END OF FILE ///////////////////////////////////////// -->

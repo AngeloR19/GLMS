@@ -1,0 +1,52 @@
+services:
+  sql-server-db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sql-server-db
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "YourStrong@Passw0rd"
+    ports:
+      - "1433:1433"
+    networks:
+      - glms-network
+    volumes:
+      - sqlserverdata:/var/opt/mssql
+
+  glms-backend-api:
+    build:
+      context: .
+      dockerfile: GLMS_API/Dockerfile
+    container_name: glms-backend-api
+    depends_on:
+      - sql-server-db
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ASPNETCORE_URLS: "http://+:8080"
+      ConnectionStrings__DefaultConnection: "Server=sql-server-db,1433;Database=GLMS_DB_API;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True;MultipleActiveResultSets=true;"
+    ports:
+      - "5000:8080"
+    networks:
+      - glms-network
+
+  glms-frontend-web:
+    build:
+      context: .
+      dockerfile: GLMS-POE/Dockerfile
+    container_name: glms-frontend-web
+    depends_on:
+      - glms-backend-api
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ASPNETCORE_URLS: "http://+:8080"
+      ApiSettings__BaseUrl: "http://glms-backend-api:8080/"
+    ports:
+      - "8080:8080"
+    networks:
+      - glms-network
+
+networks:
+  glms-network:
+    driver: bridge
+
+volumes:
+  sqlserverdata:

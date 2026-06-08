@@ -1,0 +1,98 @@
+﻿@model IEnumerable<GLMS_POE.Models.ServiceRequest>
+
+@{
+    ViewData["Title"] = "Service Requests";
+}
+
+<h2 class="fw-light mb-4">Service Requests</h2>
+
+<p class="mb-4">
+    <a asp-action="Create" class="btn btn-primary rounded-pill px-4">
+       Add Service Request
+    </a>
+</p>
+
+@if (Model == null || !Model.Any())
+{
+    <div class="alert alert-light border">
+        No service requests found.
+    </div>
+}
+else
+{
+    <table class="table align-middle">
+        <thead>
+            <tr>
+                <th>Client</th>
+                <th>Contract ID</th>
+                <th>Description</th>
+                <th>Currency</th>
+                <th>Foreign Cost</th>
+                <th>ZAR Cost</th>
+                <th>Status</th>
+                <th class="text-end">Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="fw-medium">@(item.ClientName ?? "Unknown Client")</td>
+                    <td>@item.ContractId</td>
+                    <td>@item.Description</td>
+                    <td>@item.CurrencyCode</td>
+                    <td>@item.CostForeign</td>
+                    <td>@item.CostZAR</td>
+                    <td>
+                        @if (item.Status == "Active")
+                        {
+                            <span class="badge bg-success-subtle text-success border">
+                                Active
+                            </span>
+                        }
+                        else if (item.Status == "Expired")
+                        {
+                            <span class="badge bg-danger-subtle text-danger border">
+                                Expired
+                            </span>
+                        }
+                        else if (item.Status == "On Hold")
+                        {
+                            <span class="badge bg-secondary-subtle text-secondary border">
+                                On Hold
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-light text-dark border">
+                                @item.Status
+                            </span>
+                        }
+                    </td>
+
+                    <td class="text-end text-nowrap">
+                        <a asp-action="Details"
+                               asp-route-id="@item.Id"
+                               class="btn btn-sm btn-light border rounded-pill">
+                            Details
+                        </a>
+
+                        <a asp-action="Edit"
+                               asp-route-id="@item.Id"
+                               class="btn btn-sm btn-light border rounded-pill">
+                            Edit
+                        </a>
+
+                        <a asp-action="Delete"
+                               asp-route-id="@item.Id"
+                               class="btn btn-sm btn-light border rounded-pill">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+<!-- ///////////////////////////////////////// END OF FILE ///////////////////////////////////////// -->

@@ -1,0 +1,82 @@
+﻿@model GLMS_POE.Models.Contract
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create Contract</h1>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-5">
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
+
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="form-group mb-2">
+                <label asp-for="ClientId" class="control-label"></label>
+
+                <select asp-for="ClientId" class="form-control" asp-items="ViewBag.ClientId">
+                    <option value="">-- Select Client --</option>
+                </select>
+
+                <span asp-validation-for="ClientId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-2">
+                <label asp-for="StartDate"></label>
+                <input asp-for="StartDate" type="date" class="form-control" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-2">
+                <label asp-for="EndDate"></label>
+                <input asp-for="EndDate" type="date" class="form-control" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-2">
+                <label asp-for="Status"></label>
+                <select asp-for="Status" class="form-control">
+                    <option value="">-- Select Status --</option>
+                    <option>Active</option>
+                    <option>Expired</option>
+                    <option>On Hold</option>
+                </select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-2">
+                <label asp-for="ServiceLevel"></label>
+                <select asp-for="ServiceLevel" class="form-control">
+                    <option value="">-- Select Level --</option>
+                    <option>Basic</option>
+                    <option>Standard</option>
+                    <option>Premium</option>
+                </select>
+                <span asp-validation-for="ServiceLevel" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-2">
+                <label>Upload Contract PDF</label>
+                <input type="file" name="file" class="form-control" accept=".pdf" />
+            </div>
+
+            <div class="form-group mt-4">
+
+                <button type="submit"
+                        class="btn btn-primary rounded-pill px-4">
+                    Create
+                </button>
+
+                <a asp-action="Index"
+                       class="btn btn-light border rounded-pill px-4">
+                    Back to List
+                </a>
+
+            </div>
+        </form>
+    </div>
+</div>
+<!-- ///////////////////////////////////////// END OF FILE ///////////////////////////////////////// -->

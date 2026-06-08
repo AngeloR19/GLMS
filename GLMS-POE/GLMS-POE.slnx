@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="docker-compose.yml" />
+  </Folder>
+  <Project Path="GLMS-POE/GLMS-POE.csproj" />
+  <Project Path="GLMS_API/GLMS_API.csproj" Id="4b200ff2-fbbe-4332-919a-e460e546b394" />
+  <Project Path="GLMS_POE_Tests/GLMS_POE_Tests.csproj" Id="bb73099b-7eec-4a90-a466-8c3f27c93e90" />
+</Solution>

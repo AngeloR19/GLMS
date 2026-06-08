@@ -1,0 +1,83 @@
+﻿@model GLMS_POE.Models.ServiceRequest
+
+@{
+    ViewData["Title"] = "Create Service Request";
+}
+
+<h1>Create Service Request</h1>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-5">
+        <form asp-action="Create" method="post">
+
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="form-group mb-2">
+                <label asp-for="ContractId"></label>
+                <select asp-for="ContractId" class="form-control" asp-items="ViewBag.ContractId">
+                    <option value="">-- Select Contract --</option>
+                </select>
+                <span asp-validation-for="ContractId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-2">
+                <label asp-for="Description"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-2">
+                <label asp-for="CurrencyCode"></label>
+                <select asp-for="CurrencyCode" class="form-control">
+                    <option value="">-- Select Currency --</option>
+                    <option value="ZAR">ZAR</option>
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                    <option value="GBP">GBP</option>
+                </select>
+                <span asp-validation-for="CurrencyCode" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-2">
+                <label asp-for="CostForeign"></label>
+                <input asp-for="CostForeign" class="form-control" />
+                <span asp-validation-for="CostForeign" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-2">
+                <label asp-for="Status"></label>
+                <select asp-for="Status" class="form-control">
+                    <option value="">-- Select Status --</option>
+                    <option>Active</option>
+                    <option>Expired</option>
+                    <option>On Hold</option>
+                </select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-4">
+
+                <button type="submit"
+                        class="btn btn-primary rounded-pill px-4">
+                    Create
+                </button>
+
+                <a asp-action="Index"
+                       class="btn btn-light border rounded-pill px-4">
+                    Back to List
+                </a>
+
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+<!-- ///////////////////////////////////////// END OF FILE ///////////////////////////////////////// -->

@@ -1,0 +1,88 @@
+﻿@model IEnumerable<GLMS_POE.Models.Client>
+
+@{
+    ViewData["Title"] = "Clients";
+}
+
+<h2 class="fw-light mb-4">Clients</h2>
+
+<form method="get" asp-action="Index" class="mb-3">
+    <div class="row g-2">
+        <div class="col-md-8">
+            <input type="text"
+                   name="search"
+                   class="form-control"
+                   placeholder="Search by client name..." />
+        </div>
+
+        <div class="col-md-4 d-flex gap-2">
+            <button type="submit" class="btn btn-dark">
+                Search
+            </button>
+
+            <a asp-action="Index" class="btn btn-light border">
+                Clear
+            </a>
+        </div>
+    </div>
+</form>
+
+<p class="mb-4">
+    <a asp-action="Create" class="btn btn-primary rounded-pill px-4">
+        Add Client
+    </a>
+</p>
+
+@if (Model == null || !Model.Any())
+{
+    <div class="alert alert-light border">
+        No clients found.
+    </div>
+}
+else
+{
+    <table class="table align-middle">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Region</th>
+                <th class="text-end">Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="fw-medium">@item.Name</td>
+                    <td>@item.Email</td>
+                    <td>@item.PhoneNumber</td>
+                    <td>@item.Region</td>
+
+                    <td class="text-end text-nowrap">
+                        <a asp-action="Details"
+                               asp-route-id="@item.Id"
+                               class="btn btn-sm btn-light border rounded-pill">
+                            Details
+                        </a>
+
+                        <a asp-action="Edit"
+                               asp-route-id="@item.Id"
+                               class="btn btn-sm btn-light border rounded-pill">
+                            Edit
+                        </a>
+
+                        <a asp-action="Delete"
+                               asp-route-id="@item.Id"
+                               class="btn btn-sm btn-light border rounded-pill">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+<!-- ///////////////////////////////////////// END OF FILE ///////////////////////////////////////// -->
